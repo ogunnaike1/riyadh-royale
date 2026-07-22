@@ -67,7 +67,12 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
           style={{ aspectRatio: "3/4" }}
         >
           <motion.div className="h-[116%] w-full" style={{ y: imageY }}>
-            <ImageSlot label={product.placeholder} className="h-full" />
+            <ImageSlot
+              label={product.placeholder}
+              src={product.image}
+              objectPosition={product.imagePosition}
+              className="h-full"
+            />
           </motion.div>
 
           <motion.button
