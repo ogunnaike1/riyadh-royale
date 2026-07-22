@@ -3,41 +3,11 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ImageSlot } from "./ImageSlot";
+import { products, type Product } from "@/data/products";
 
-const featuredItems = [
-  {
-    name: "Noir Absolu",
-    desc: "Oud, black pepper, amber",
-    price: "$285",
-    placeholder: "Drop Noir Absolu bottle photo",
-  },
-  {
-    name: "Velvet Oud",
-    desc: "Rose, saffron, sandalwood",
-    price: "$310",
-    placeholder: "Drop Velvet Oud bottle photo",
-  },
-  {
-    name: "Blanc Ambré",
-    desc: "Vanilla, white musk, amber",
-    price: "$265",
-    placeholder: "Drop Blanc Ambré bottle photo",
-  },
-  {
-    name: "Rose Éclat",
-    desc: "Bulgarian rose, iris, cedar",
-    price: "$295",
-    placeholder: "Drop Rose Éclat bottle photo",
-  },
-];
+const featuredItems = products.filter((p) => p.category === "featured");
 
-function FeaturedCard({
-  item,
-  index,
-}: {
-  item: (typeof featuredItems)[number];
-  index: number;
-}) {
+function FeaturedCard({ item, index }: { item: Product; index: number }) {
   const cardRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: cardRef,
@@ -76,16 +46,21 @@ function FeaturedCard({
           style={{ aspectRatio: "3/4" }}
         >
           <motion.div className="h-[116%] w-full" style={{ y: imageY }}>
-            <ImageSlot label={item.placeholder} className="h-full" />
+            <ImageSlot
+              label={item.placeholder}
+              src={item.image}
+              objectPosition={item.imagePosition}
+              className="h-full"
+            />
           </motion.div>
         </div>
         <div className="mb-1.5 font-display text-[22px] font-semibold text-ink">
           {item.name}
         </div>
         <div className="mb-3.5 text-[13px] font-light text-muted">
-          {item.desc}
+          {item.notes}
         </div>
-        <div className="text-sm tracking-[1px] text-teal">{item.price}</div>
+        <div className="text-sm tracking-[1px] text-teal">${item.price}</div>
       </motion.div>
     </motion.div>
   );
